@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
@@ -21,14 +21,14 @@ app.post("/",function(req,res){
 
     console.log(firstName,lastName,email_id);
 
-    const listID = "a6d88f980a";
-    const apiKey = "40093644faed0646f3890fe24f664d7f-us14";
+    const listID = process.env.LIST_ID;
+    const apiKey = process.env.API_KEY;
 
     const url = "https://us14.api.mailchimp.com/3.0/lists/"+listID+"/";
 
     const options={
         method: 'POST',
-        auth: "janu:40093644faed0646f3890fe24f664d7f-us14"
+        auth: process.env.AUTH_KEY
 
     }
 
@@ -71,22 +71,13 @@ app.post("/",function(req,res){
     request.write(jsonData);
     request.end();
 
-
-
 })
 
 
-// audience ID
-// a6d88f980a
-
-// API Key
-// 40093644faed0646f3890fe24f664d7f-us14
 
 
 
 
-
-
-app.listen(process.env.PORT,function(){
+app.listen(process.env.PORT || 3000,function(){
     console.log("Server started at port 3000");
 })
